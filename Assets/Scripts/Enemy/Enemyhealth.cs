@@ -9,10 +9,12 @@ public class Enemyhealth : MonoBehaviour
     public Slider playerHealthIndicator;
     float sliderActiveTime=0;
     public float maxHealth;
-
- 
+   
     float currentHealth;
     public GameObject deathPS;
+    //HelathPickup
+    public GameObject healthObject;
+    public bool canDrop;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +28,7 @@ public class Enemyhealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sliderActiveTime < Time.time)
+        if (sliderActiveTime < Time.time )
         {
             playerHealthIndicator.gameObject.SetActive(false);
         }
@@ -42,7 +44,8 @@ public class Enemyhealth : MonoBehaviour
         {
            
             Instantiate(deathPS, transform.position, transform.rotation);
-            Destroy(gameObject);
+            Destroy(gameObject.transform.parent.gameObject);
+            if(canDrop) Instantiate(healthObject, transform.position, transform.rotation);
         }
     }
    

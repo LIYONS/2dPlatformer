@@ -18,13 +18,13 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         
-        boarRBody = GetComponentInChildren<Rigidbody2D>();
+        boarRBody = GetComponent<Rigidbody2D>();
         boarAnimator = GetComponentInChildren<Animator>();
     }
 
     void Update()
     {
-        if (GetComponentInChildren<Rigidbody2D>())
+        if (GetComponent<Rigidbody2D>())
         {
             if ((nextFliptime < Time.time) && canFlip)
             {
@@ -41,8 +41,9 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Debug.Log("Enter");
             canFlip = false;
-            attackOffset = Time.time + 1f;
+            attackOffset = Time.time + .5f;
             if(facingRight && boarRBody.transform.position.x > other.transform.position.x)
             {
                 FlipEnemy();
@@ -61,6 +62,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (attackOffset < Time.time && other.tag=="Player")
         {
+            Debug.Log("stay");
+            if(boarAnimator)
             boarAnimator.SetBool("IsCharged", true);
             if(facingRight)
                 boarRBody.velocity=(new Vector2(attackSpeed, 0));
@@ -72,9 +75,10 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            Debug.Log("Exit");
             canFlip = true;
             boarRBody.velocity = new Vector2(0, 0);
-            boarAnimator.SetBool("IsCharged", false);
+            if(boarAnimator) boarAnimator.SetBool("IsCharged", false);
         }
     }
     void FlipEnemy()

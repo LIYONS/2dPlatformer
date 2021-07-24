@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
 
     //UI Elements
     public Slider playerHealthIndicator;
-
+    public Image fill;
     public float maxHealth;
     float currentHealth;
     public GameObject bloodPS;
@@ -26,24 +26,36 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Update()
     {
-        if (sliderActiveTime < Time.time)
+        if (sliderActiveTime < Time.time && currentHealth>1/4*currentHealth)
         {
             playerHealthIndicator.gameObject.SetActive(false);
         }
+        if (currentHealth < 1 / 2 * maxHealth) fill.color = new Color(1, 0, 0, 1); 
     }
     public void addDamage(float damage)
-    { 
-        sliderActiveTime = Time.time+1f;
-        currentHealth -= damage;
-        playerHurt.Play();
-        playerHealthIndicator.gameObject.SetActive(true);
-        playerHealthIndicator.value = currentHealth;
-        Instantiate(damageTaken, transform.position, transform.rotation);
-        if (currentHealth <= 0)
+    {
+        if (damage > 0)
         {
-            kill();
-        }   
+            sliderActiveTime = Time.time + 1f;
+            currentHealth -= damage;
+            playerHurt.Play();
+            playerHealthIndicator.gameObject.SetActive(true);
+            playerHealthIndicator.value = currentHealth;
+            Instantiate(damageTaken, transform.position, transform.rotation);
+            if (currentHealth <= 0)
+            {
+                kill();
+            }
+        }
         
+    }
+    public void addHealth(float healthAmount)
+    {
+        currentHealth += healthAmount;
+        playerHealthIndicator.value = currentHealth;
+        sliderActiveTime = Time.time + 1f;
+        playerHealthIndicator.gameObject.SetActive(true);
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
     public void kill()
     {

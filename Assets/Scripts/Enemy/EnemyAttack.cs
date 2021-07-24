@@ -37,6 +37,6 @@ public class EnemyAttack : MonoBehaviour
     }
     void PushBack(Rigidbody2D player)
     {
-        player.AddForce(new Vector2(pushBackForce, pushBackForce),ForceMode2D.Impulse);
+        player.AddForce(new Vector2(pushBackForce, pushBackForce*2),ForceMode2D.Impulse);
     }
 }

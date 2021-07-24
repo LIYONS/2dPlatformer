@@ -42,3 +42,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: CannonSortingLayer
+    uniqueID: 2224836651
+    locked: 0
