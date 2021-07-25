@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     //Jumping variables
     bool isGrounded = false;
     public float jumpheight;
-    public float jumpDistance;
     public Transform centerPoint;
     float radius = 0.2f;
     public LayerMask groundLayer;
@@ -40,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     public void flipPlayer()
     {
         facingRight = !facingRight;
-        jumpDistance *= -1;
         Vector3 playerScale = transform.localScale;
         playerScale.x *= -1;
         transform.localScale = playerScale;
@@ -58,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && Input.GetAxis("Jump") > 0)
         {
             anim.SetBool("isgrounded", false);
-            rb.AddForce(new Vector2(jumpDistance, jumpheight));
+            rb.AddForce(new Vector2(0, jumpheight));
         }
 
         //Shoot
@@ -72,10 +70,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("speed", Mathf.Abs(h));
 
         Vector2 pos = transform.position;
-        if (isGrounded) pos.x += h * speed * Time.deltaTime;
+        pos.x += h * speed * Time.deltaTime;
 
-        else
-            pos.x += h * speed *.3f* Time.deltaTime;
+        
         
 
 

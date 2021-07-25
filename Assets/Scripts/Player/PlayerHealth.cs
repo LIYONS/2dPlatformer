@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+
     //Audio
     public AudioSource playerHurt;
 
@@ -12,6 +13,20 @@ public class PlayerHealth : MonoBehaviour
     public Slider playerHealthIndicator;
     public Image fill;
     public float maxHealth;
+
+
+    //DeathUI
+    public Text gameOverText;
+    public Image BloodShatterScreen;
+    Animator gameOverTextAnimator;
+    Color blood = new Color(1, 0, 0, 1);
+    //Win
+    public Text gameWintext;
+
+    //Restart
+    public GameObject gameManager;
+    GameManager gameMngScript;
+
     float currentHealth;
     public GameObject bloodPS;
     public GameObject damageTaken;
@@ -19,6 +34,8 @@ public class PlayerHealth : MonoBehaviour
     float sliderActiveTime=0f;
     private void Start()
     {
+        gameMngScript = gameManager.GetComponent<GameManager>();
+        gameOverTextAnimator = gameOverText.GetComponent<Animator>();
         playerHealthIndicator.maxValue = maxHealth;
         currentHealth = maxHealth;
         playerHealthIndicator.value = maxHealth;
@@ -30,7 +47,7 @@ public class PlayerHealth : MonoBehaviour
         {
             playerHealthIndicator.gameObject.SetActive(false);
         }
-        if (currentHealth < 1 / 2 * maxHealth) fill.color = new Color(1, 0, 0, 1); 
+        if (currentHealth < 1 / 2 * maxHealth) fill.color = new Color(1, 0, 0, 1);
     }
     public void addDamage(float damage)
     {
@@ -59,11 +76,20 @@ public class PlayerHealth : MonoBehaviour
     }
     public void kill()
     {
-        if (currentHealth <= 0)
-        {
-            Instantiate(bloodPS, transform.position, transform.rotation);
-            Destroy(gameObject);
-        }
+        gameMngScript.restartGame();
+        Instantiate(bloodPS, transform.position, transform.rotation);
+        Destroy(gameObject);
+        gameOverTextAnimator.SetTrigger("gameOver");
+        BloodShatterScreen.color = blood;
+        
+           
+    }
+    public void WinGame()
+    {
+        Animator gameWinAnimator = gameWintext.GetComponent<Animator>();
+        gameWinAnimator.SetTrigger("gameOver");
+        Destroy(gameObject);
+        gameMngScript.restartGame();
     }
    
 }

@@ -19,20 +19,23 @@ public class Enemyhealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerHealthIndicator.maxValue = maxHealth;
         currentHealth = maxHealth;
-        playerHealthIndicator.value = maxHealth;
-        playerHealthIndicator.gameObject.SetActive(false);
+        if (playerHealthIndicator)
+        {
+            playerHealthIndicator.maxValue = maxHealth;
+            playerHealthIndicator.value = maxHealth;
+            playerHealthIndicator.gameObject.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sliderActiveTime < Time.time )
+        if (sliderActiveTime < Time.time && playerHealthIndicator)
         {
             playerHealthIndicator.gameObject.SetActive(false);
         }
-        
+
     }
     public void addDamage(float damage)
     {
@@ -40,13 +43,13 @@ public class Enemyhealth : MonoBehaviour
         playerHealthIndicator.gameObject.SetActive(true);
         sliderActiveTime = Time.time + 2f;
         playerHealthIndicator.value = currentHealth;
-        if (currentHealth <= 0)
-        {
-           
-            Instantiate(deathPS, transform.position, transform.rotation);
-            Destroy(gameObject.transform.parent.gameObject);
-            if(canDrop) Instantiate(healthObject, transform.position, transform.rotation);
-        }
+        if (currentHealth <= 0) kill();
     }
-   
+   public void kill()
+    {
+
+        Instantiate(deathPS, transform.position, transform.rotation);
+        Destroy(gameObject.transform.parent.gameObject);
+        if (canDrop) Instantiate(healthObject, transform.position, transform.rotation);
+    }
 }

@@ -122,4 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAmount: 50
-  aliveTime: 2
+  aliveTime: 10

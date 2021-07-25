@@ -41,7 +41,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Enter");
+            
             canFlip = false;
             attackOffset = Time.time + .5f;
             if(facingRight && boarRBody.transform.position.x > other.transform.position.x)
@@ -62,7 +62,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (attackOffset < Time.time && other.tag=="Player")
         {
-            Debug.Log("stay");
+            
             if(boarAnimator)
             boarAnimator.SetBool("IsCharged", true);
             if(facingRight)
@@ -75,7 +75,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Exit");
+         
             canFlip = true;
             boarRBody.velocity = new Vector2(0, 0);
             if(boarAnimator) boarAnimator.SetBool("IsCharged", false);

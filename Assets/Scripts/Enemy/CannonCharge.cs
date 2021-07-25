@@ -11,9 +11,11 @@ public class CannonCharge : MonoBehaviour
     public float offset;
     private void Start()
     {
+        shootInterval = Time.time;
         cannonAnimator = GetComponentInChildren<Animator>();
-        shootInterval = 0f;
+        
     }
+  
     private void OnTriggerStay2D(Collider2D other)
     {
         if (shootInterval < Time.time && other.tag=="Player")
