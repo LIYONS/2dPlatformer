@@ -98,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   damageOffset: 0.5
-  pushBackForce: 4
+  pushBackForce: 8
 --- !u!61 &5050347415144993135
 BoxCollider2D:
   m_ObjectHideFlags: 0

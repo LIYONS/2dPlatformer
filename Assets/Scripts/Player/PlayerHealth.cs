@@ -89,7 +89,7 @@ public class PlayerHealth : MonoBehaviour
         Animator gameWinAnimator = gameWintext.GetComponent<Animator>();
         gameWinAnimator.SetTrigger("gameOver");
         Destroy(gameObject);
-        gameMngScript.restartGame();
+        gameMngScript.nextLevel();
     }
    
 }

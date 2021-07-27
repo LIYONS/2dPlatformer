@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 2;
-
     Rigidbody2D rb;
     Animator anim;
 
@@ -15,15 +14,13 @@ public class PlayerMovement : MonoBehaviour
     public Transform centerPoint;
     float radius = 0.2f;
     public LayerMask groundLayer;
+    float nextJump;
 
     //shooting
     public Transform gunTip;
     public GameObject bullet;
     public float fireRate = 1f;
     float nextFire;
-
-
-    SpriteRenderer playerSprite;
 
     public bool facingRight;
 
@@ -33,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim = GetComponent<Animator>();
         facingRight = true;
+        nextJump = 0f;
     }
 
 
@@ -53,10 +51,12 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("verticalSpeed", rb.velocity.y);
 
         //Jump
-        if (isGrounded && Input.GetAxis("Jump") > 0)
+        if (isGrounded && Input.GetAxis("Jump") > 0 && nextJump<Time.time)
         {
+            
             anim.SetBool("isgrounded", false);
             rb.AddForce(new Vector2(0, jumpheight));
+            nextJump =Time.time+.7f;
         }
 
         //Shoot
@@ -70,10 +70,12 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("speed", Mathf.Abs(h));
 
         Vector2 pos = transform.position;
-        pos.x += h * speed * Time.deltaTime;
+        if(isGrounded) pos.x += h * speed * Time.deltaTime;
+        else pos.x += h * speed*.5f * Time.deltaTime;
 
-        
-        
+
+
+
 
 
 

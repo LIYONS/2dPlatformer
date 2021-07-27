@@ -5,18 +5,17 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform player;
-    float offSet;
-    float lowY;
+    float offSetX;
+    float offsetY;
+    public float lowY = -14;
     Vector3 pos;
 
     void Start()
     {
-        StartCoroutine(CollectPos());
-        offSet = player.position.x - transform.position.x;
+        offSetX = player.position.x - transform.position.x;
+        offsetY = player.position.y - transform.position.y;
 
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (player)
@@ -24,16 +23,13 @@ public class CameraMovement : MonoBehaviour
             if (player.position.y > lowY)
             {
                 pos = transform.position;
-                pos.x = player.position.x - offSet;
+                pos.x = player.position.x - offSetX;
+                pos.y = player.position.y - offsetY;
                 transform.position = pos;
             }
         }
 
     }
-    IEnumerator CollectPos()
-    {
-        yield return new WaitForSeconds(1f);
-        lowY = player.position.y-0.5f;
-    }
+   
 }
 
