@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   damageOffset: 1
-  pushBackForce: 0
+  pushBackForce: 1
 --- !u!114 &2122054799064888955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leafPS: {fileID: 1804465367945893648, guid: 7a4fe5855c838de49b868f70a3396295, type: 3}
   sporeRb: {fileID: 1706308489052817770}
-  forceLow: 1
-  forceHigh: 5
-  torqueAmount: 1
+  forceLow: 5
+  forceHigh: 10
+  torqueAmount: 2

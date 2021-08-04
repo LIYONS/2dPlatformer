@@ -576,7 +576,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 3024260679948973291}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 5475c1c65ca757d42b048fa190299ce0, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  damageOffset: 0.5
+  damageOffset: 0.2
   pushBackForce: 5
 --- !u!58 &3024260679948973292
 CircleCollider2D:

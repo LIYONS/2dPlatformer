@@ -5,35 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public float restartDelay;
-    bool canRestart = false;
-    public float nextSceneDelay;
-    bool canLoad = false;
+    
     void Start()
     {
-        
     }
     void Update()
-    {
-        if (canRestart && restartDelay<Time.time)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        if (Input.GetKey("escape")) Application.Quit();
-        if (canLoad&& nextSceneDelay<Time.time)
-        {
-            
-            if (Time.time > nextSceneDelay) LoadNextLevel();
-            canLoad = false;
-        }
-        
+    {      
+        if (Input.GetKey("escape")) Application.Quit();      
     }
     public void restartGame()
     {
-        canRestart = true;
-        restartDelay = Time.time + 5f;
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+   
     public void QuitGame()
     {
         Application.Quit();
@@ -45,12 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void nextLevel()
     {
-        canLoad = true;
-        nextSceneDelay = Time.time + 5f;
-    }
-    public void LoadNextLevel()
-    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-
+    
 }

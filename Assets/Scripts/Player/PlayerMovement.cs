@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,11 +9,10 @@ public class PlayerMovement : MonoBehaviour
 
     //Jumping variables
     bool isGrounded = false;
-    public float jumpheight;
+    public float jumpForce;
     public Transform centerPoint;
     float radius = 0.2f;
     public LayerMask groundLayer;
-    float nextJump;
 
     //shooting
     public Transform gunTip;
@@ -27,12 +25,17 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         anim = GetComponent<Animator>();
         facingRight = true;
-        nextJump = 0f;
     }
-
+    private void Update()
+    { 
+        //Jump
+        if (Input.GetKeyDown("space") && isGrounded)
+        {
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+    }
 
     public void flipPlayer()
     {
@@ -41,60 +44,45 @@ public class PlayerMovement : MonoBehaviour
         playerScale.x *= -1;
         transform.localScale = playerScale;
     }
-
     void FixedUpdate()
     {
         //isgrounded?
-        isGrounded = Physics2D.OverlapCircle(centerPoint.position,radius, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(centerPoint.position, radius, groundLayer);
         anim.SetBool("isgrounded", isGrounded);
 
         anim.SetFloat("verticalSpeed", rb.velocity.y);
-
-        //Jump
-        if (isGrounded && Input.GetAxis("Jump") > 0 && nextJump<Time.time)
-        {
-            
-            anim.SetBool("isgrounded", false);
-            rb.AddForce(new Vector2(0, jumpheight));
-            nextJump =Time.time+.7f;
-        }
-
+       
         //Shoot
-        if(isGrounded && Input.GetAxisRaw("Fire1")>0)
+        if(Input.GetAxisRaw("Fire1")>0)
         {
             Fire();
+            
         }
-      
         float h = Input.GetAxis("Horizontal");
 
         anim.SetFloat("speed", Mathf.Abs(h));
-
-        Vector2 pos = transform.position;
-        if(isGrounded) pos.x += h * speed * Time.deltaTime;
-        else pos.x += h * speed*.5f * Time.deltaTime;
-
-
-
-
-
-
-
-        transform.position = pos;
-
-        if(h>0 && facingRight !=true)
+        if (h!=0)
         {
-            flipPlayer();
-        }
-        else if(h<0 && facingRight)
-        {
-            flipPlayer();
-        }
+            rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
+            
+            if (h > 0 && facingRight != true)
+            {
+                flipPlayer();
+            }
+            else if (h < 0 && facingRight)
+            {
+                flipPlayer();
+            }
+        }
+        
     }
-    void Fire()
+    public void Fire()
     {
         if (Time.time > nextFire)
         {
+            anim.SetBool("isAttacking",true);
+            StartCoroutine(AnimTimeControl());
             nextFire = Time.time + fireRate;
             if (facingRight)
             {
@@ -106,9 +94,10 @@ public class PlayerMovement : MonoBehaviour
                 
             }
         }
-        
-
-       
-
     }
+    IEnumerator AnimTimeControl()
+    {
+        yield return new WaitForSeconds(.5f);
+        anim.SetBool("isAttacking",false);
+    }      
 }

@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
 {
 
     //Audio
-    public AudioSource playerHurt;
+    public AudioSource playerAudSource;
 
     //UI Elements
     public Slider playerHealthIndicator;
@@ -16,26 +16,21 @@ public class PlayerHealth : MonoBehaviour
 
 
     //DeathUI
-    public Text gameOverText;
-    public Image BloodShatterScreen;
-    Animator gameOverTextAnimator;
-    Color blood = new Color(1, 0, 0, 1);
-    //Win
-    public Text gameWintext;
+    public GameObject gameOverCanvas;
+    public GameObject winCanvas;
 
     //Restart
     public GameObject gameManager;
-    GameManager gameMngScript;
 
-    float currentHealth;
+    public float currentHealth;
     public GameObject bloodPS;
     public GameObject damageTaken;
 
     float sliderActiveTime=0f;
     private void Start()
     {
-        gameMngScript = gameManager.GetComponent<GameManager>();
-        gameOverTextAnimator = gameOverText.GetComponent<Animator>();
+        winCanvas.SetActive(false);
+        gameOverCanvas.SetActive(false);
         playerHealthIndicator.maxValue = maxHealth;
         currentHealth = maxHealth;
         playerHealthIndicator.value = maxHealth;
@@ -53,9 +48,10 @@ public class PlayerHealth : MonoBehaviour
     {
         if (damage > 0)
         {
+            
             sliderActiveTime = Time.time + 1f;
             currentHealth -= damage;
-            playerHurt.Play();
+            playerAudSource.Play();
             playerHealthIndicator.gameObject.SetActive(true);
             playerHealthIndicator.value = currentHealth;
             Instantiate(damageTaken, transform.position, transform.rotation);
@@ -76,20 +72,13 @@ public class PlayerHealth : MonoBehaviour
     }
     public void kill()
     {
-        gameMngScript.restartGame();
         Instantiate(bloodPS, transform.position, transform.rotation);
-        Destroy(gameObject);
-        gameOverTextAnimator.SetTrigger("gameOver");
-        BloodShatterScreen.color = blood;
-        
-           
+
+        if(gameOverCanvas) gameOverCanvas.SetActive(true);
     }
     public void WinGame()
     {
-        Animator gameWinAnimator = gameWintext.GetComponent<Animator>();
-        gameWinAnimator.SetTrigger("gameOver");
         Destroy(gameObject);
-        gameMngScript.nextLevel();
-    }
-   
+        if(winCanvas) winCanvas.SetActive(true);       
+    }  
 }
