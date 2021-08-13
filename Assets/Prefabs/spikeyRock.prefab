@@ -75,7 +75,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3576098394414216881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: -1.58, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3576098394316205398}
@@ -160,8 +160,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0936999211fbb84fb876f7a01bedc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealthIndicator: {fileID: 0}
   maxHealth: 20
-  bloodPS: {fileID: 1024231772160020392, guid: 08e532ca0bf709c41803b116cf18b1f8, type: 3}
+  deathPS: {fileID: 0}
+  healthObject: {fileID: 0}
+  canDrop: 0
 --- !u!114 &30810580
 MonoBehaviour:
   m_ObjectHideFlags: 0

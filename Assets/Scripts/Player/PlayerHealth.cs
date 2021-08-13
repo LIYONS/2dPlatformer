@@ -75,6 +75,7 @@ public class PlayerHealth : MonoBehaviour
         Instantiate(bloodPS, transform.position, transform.rotation);
 
         if(gameOverCanvas) gameOverCanvas.SetActive(true);
+        transform.gameObject.SetActive(false);
     }
     public void WinGame()
     {
