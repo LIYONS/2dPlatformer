@@ -19,6 +19,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject bullet;
     public float fireRate = 1f;
     float nextFire;
+    CameraShake camShake;
+
+    //Sliding
+    public Transform frontTouch;
+    bool isTouchingFront;
+    bool wallSliding;
+
+    //wallJump
+    public float xWallForce;
+    public float yWallForce;
+
 
     public bool facingRight;
 
@@ -27,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         facingRight = true;
+        camShake = GetComponent<CameraShake>();
     }
     private void Update()
     { 
@@ -34,6 +46,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown("space") && isGrounded)
         {
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+        //wallJump
+        if (wallSliding && Input.GetKeyDown("space"))
+        {
+            rb.AddForce(new Vector2(-xWallForce,yWallForce),ForceMode2D.Impulse);
         }
     }
 
@@ -51,7 +68,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isgrounded", isGrounded);
 
         anim.SetFloat("verticalSpeed", rb.velocity.y);
+
        
+
         //Shoot
         if(Input.GetAxisRaw("Fire1")>0)
         {
@@ -63,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("speed", Mathf.Abs(h));
         if (h!=0)
         {
+            if(!wallSliding)
             rb.velocity = new Vector2(h * speed, rb.velocity.y);
 
             
@@ -75,7 +95,20 @@ public class PlayerMovement : MonoBehaviour
                 flipPlayer();
             }
         }
-        
+        //Slide
+        isTouchingFront = Physics2D.OverlapCircle(frontTouch.position, 0.2f,groundLayer);
+        if (isTouchingFront && isGrounded==false && h != 0)
+        {
+            wallSliding = true;
+        }
+        else
+        {
+            wallSliding = false;
+        }
+        if (wallSliding)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y,0,float.MaxValue));
+        }
     }
     public void Fire()
     {
@@ -93,11 +126,17 @@ public class PlayerMovement : MonoBehaviour
                 Instantiate(bullet, gunTip.position, Quaternion.Euler(new Vector3(0, 0, 180)));
                 
             }
+            camShake.Shake();
         }
     }
     IEnumerator AnimTimeControl()
     {
         yield return new WaitForSeconds(.5f);
         anim.SetBool("isAttacking",false);
-    }      
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(centerPoint.position,.2f);
+        Gizmos.DrawSphere(frontTouch.position, .2f);
+    }
 }

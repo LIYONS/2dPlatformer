@@ -8,7 +8,7 @@ public class collisionManager : MonoBehaviour
 
     public GameObject explosion;
 
-     Projectilemovement projectileCtrl;
+    Projectilemovement projectileCtrl;
 
     // Start is called before the first frame update
     void Start()

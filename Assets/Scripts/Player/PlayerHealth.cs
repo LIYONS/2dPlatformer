@@ -21,20 +21,24 @@ public class PlayerHealth : MonoBehaviour
 
     //Restart
     public GameObject gameManager;
+    GameManager gameMngScript;
 
     public float currentHealth;
     public GameObject bloodPS;
     public GameObject damageTaken;
 
     float sliderActiveTime=0f;
+    CameraShake camShake;
     private void Start()
     {
+        gameMngScript = gameManager.GetComponent<GameManager>();
         winCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
         playerHealthIndicator.maxValue = maxHealth;
         currentHealth = maxHealth;
         playerHealthIndicator.value = maxHealth;
         playerHealthIndicator.gameObject.SetActive(false);
+        camShake = GetComponent<CameraShake>();
     }
     private void Update()
     {
@@ -51,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
             
             sliderActiveTime = Time.time + 1f;
             currentHealth -= damage;
+            camShake.Shake();
             playerAudSource.Play();
             playerHealthIndicator.gameObject.SetActive(true);
             playerHealthIndicator.value = currentHealth;
@@ -73,8 +78,7 @@ public class PlayerHealth : MonoBehaviour
     public void kill()
     {
         Instantiate(bloodPS, transform.position, transform.rotation);
-
-        if(gameOverCanvas) gameOverCanvas.SetActive(true);
+        if (gameOverCanvas) gameOverCanvas.SetActive(true);
         transform.gameObject.SetActive(false);
     }
     public void WinGame()
@@ -82,4 +86,5 @@ public class PlayerHealth : MonoBehaviour
         Destroy(gameObject);
         if(winCanvas) winCanvas.SetActive(true);       
     }  
+    
 }

@@ -8,12 +8,12 @@ public class LauncherProjectile : MonoBehaviour
     PlayerHealth plyrHealth;
     public float damage;
     public float speed;
-    public GameObject explosionPS;
+    public GameObject explosionPS; 
     float delay = 0;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);;
     }
   
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,8 +24,8 @@ public class LauncherProjectile : MonoBehaviour
             Instantiate(explosionPS, transform.position, Quaternion.identity);
             plyrHealth = other.gameObject.GetComponent<PlayerHealth>();
             plyrHealth.addDamage(damage);
-            Destroy(gameObject);
             delay = Time.time + 1;
+            Destroy(gameObject);
 
         }
     }

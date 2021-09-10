@@ -9,7 +9,8 @@ public class CameraMovement : MonoBehaviour
     float offsetY;
     public float lowY = -14;
     Vector3 pos;
-
+    public float smoothening;
+ 
     void Start()
     {
         offSetX = player.position.x - transform.position.x;

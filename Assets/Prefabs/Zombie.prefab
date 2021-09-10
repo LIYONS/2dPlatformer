@@ -86,7 +86,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8630111651178405058}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 24.44, y: 6.41, z: 0}
   m_LocalScale: {x: -0.6, y: 0.6, z: 1}
   m_Children:
@@ -644,9 +644,9 @@ GameObject:
   - component: {fileID: 8914393129645015758}
   - component: {fileID: 8914393129645015761}
   - component: {fileID: 8914393129645015762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZombieSprite
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -730,7 +730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealthIndicator: {fileID: 8630111652177909585}
-  maxHealth: 0
+  maxHealth: 50
   deathPS: {fileID: 1024231772160020392, guid: 08e532ca0bf709c41803b116cf18b1f8, type: 3}
   healthObject: {fileID: 1028172492128435357, guid: fd49f005f647d934fa89d678b6c8389b,
     type: 3}
@@ -818,6 +818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e56783a0fd4474d942bd70817a8c2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 15
   damageOffset: 0.5
   pushBackForce: 1

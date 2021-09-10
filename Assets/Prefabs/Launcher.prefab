@@ -111,7 +111,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5408942134628512508}
   - component: {fileID: 5408942134628512509}
-  m_Layer: 0
+  - component: {fileID: 1141585245}
+  m_Layer: 8
   m_Name: Launcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,6 +151,32 @@ MonoBehaviour:
   gunTip: {fileID: 5408942135810366949}
   bullet: {fileID: 456105084775333366, guid: 75c3816ac8c2d354d89e096b84d405c2, type: 3}
   puffPS: {fileID: 1804465367945893648, guid: 7a4fe5855c838de49b868f70a3396295, type: 3}
+--- !u!61 &1141585245
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5408942134628512258}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -3.2}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &5408942135810366954
 GameObject:
   m_ObjectHideFlags: 0
