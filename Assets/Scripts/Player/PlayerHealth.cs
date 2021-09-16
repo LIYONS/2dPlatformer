@@ -11,9 +11,12 @@ public class PlayerHealth : MonoBehaviour
 
     //UI Elements
     public Slider playerHealthIndicator;
-    public Image fill;
     public float maxHealth;
 
+
+    //Life
+    public Image[] lifeImages;
+    int lifeCount;
 
     //DeathUI
     public GameObject gameOverCanvas;
@@ -31,6 +34,24 @@ public class PlayerHealth : MonoBehaviour
     CameraShake camShake;
     private void Start()
     {
+        if (PlayerPrefs.HasKey("lifeCount"))
+        {
+            lifeCount = PlayerPrefs.GetInt("lifeCount");           
+        }
+        else
+        {
+            lifeCount = lifeImages.Length;    
+        }
+        for(int i = 0; i < lifeImages.Length; i++)
+        {
+            if (i < lifeCount) lifeImages[i].color = Color.red;
+            else lifeImages[i].color = Color.black;
+        }
+        if (PlayerPrefs.HasKey("lastPosX"))
+        {
+            Vector3 lastPos = new Vector3(PlayerPrefs.GetFloat("lastPosX"), PlayerPrefs.GetFloat("lastPosY"), transform.position.z);
+            transform.position = lastPos;
+        }
         gameMngScript = gameManager.GetComponent<GameManager>();
         winCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
@@ -46,7 +67,6 @@ public class PlayerHealth : MonoBehaviour
         {
             playerHealthIndicator.gameObject.SetActive(false);
         }
-        if (currentHealth < 1 / 2 * maxHealth) fill.color = new Color(1, 0, 0, 1);
     }
     public void addDamage(float damage)
     {
@@ -77,6 +97,16 @@ public class PlayerHealth : MonoBehaviour
     }
     public void kill()
     {
+        if (lifeCount > 1)
+        {
+            lifeCount--;
+            PlayerPrefs.SetInt("lifeCount", lifeCount);
+            PlayerPrefs.Save();
+        }
+        else if (lifeCount == 1)
+        {
+            PlayerPrefs.DeleteAll();
+        }
         Instantiate(bloodPS, transform.position, transform.rotation);
         if (gameOverCanvas) gameOverCanvas.SetActive(true);
         transform.gameObject.SetActive(false);
