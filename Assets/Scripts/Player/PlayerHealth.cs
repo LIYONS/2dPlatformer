@@ -79,7 +79,8 @@ public class PlayerHealth : MonoBehaviour
             playerAudSource.Play();
             playerHealthIndicator.gameObject.SetActive(true);
             playerHealthIndicator.value = currentHealth;
-            Instantiate(damageTaken, transform.position, transform.rotation);
+            Vector3 damPos = new Vector3(transform.position.x, transform.position.y, -10);
+            Instantiate(damageTaken,damPos, transform.rotation);
             if (currentHealth <= 0)
             {
                 kill();

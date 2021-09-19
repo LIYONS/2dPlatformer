@@ -13,7 +13,7 @@ public class LauncherProjectile : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);;
+        rb.AddForce(new Vector2(speed, 0), ForceMode2D.Impulse);
     }
   
     private void OnTriggerEnter2D(Collider2D other)
@@ -21,7 +21,7 @@ public class LauncherProjectile : MonoBehaviour
         if (other.gameObject.tag == "Player"&&delay<Time.time)
         {
             rb.velocity = new Vector2(0, 0);
-            Instantiate(explosionPS, transform.position, Quaternion.identity);
+            Instantiate(explosionPS,transform.position, Quaternion.identity);
             plyrHealth = other.gameObject.GetComponent<PlayerHealth>();
             plyrHealth.addDamage(damage);
             delay = Time.time + 1;
